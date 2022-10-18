@@ -1,4 +1,5 @@
 import React from 'react'
+import Pagination from 'react-bootstrap/Pagination';
 
 const Paginate = ({ recipePerPage, totalRecipes, paginat }) => {
 
@@ -8,15 +9,11 @@ const Paginate = ({ recipePerPage, totalRecipes, paginat }) => {
     }
   return (
     <div className='paginate'>
-        <ul>
-            {pageNumebers.map(n => {
-                return <li key={n}>
-                    <a onClick={() => paginat(n)} href='#'>
+        <Pagination style={{display:"flex", justifyContent: "center"}}>{pageNumebers.map(n => {
+                return <Pagination.Item key={n} onClick={() => paginat(n)}>
                         {n}
-                    </a>
-                </li>
-            })}
-        </ul>
+                </Pagination.Item>
+            })}</Pagination>
     </div>
   )
 }
