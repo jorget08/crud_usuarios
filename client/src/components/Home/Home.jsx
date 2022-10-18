@@ -58,10 +58,9 @@ const Home = () => {
     
     return (
         <div>
-            <div className='nav'>
+            
             <NavBar></NavBar>
-            <SearchBar></SearchBar>
-            </div>
+            
             <div className='homeTitle'>
             <h1>Users Crud</h1>
             <br/>

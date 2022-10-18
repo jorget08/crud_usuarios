@@ -5,6 +5,7 @@ import Home from './components/Home/Home'
 import UserDetail from './components/UserDetail/UserDetail'
 import CreateUser from './components/CreateUser/CreateUser'
 import UpdateUser from './components/UpdateUser/UpdateUser'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
