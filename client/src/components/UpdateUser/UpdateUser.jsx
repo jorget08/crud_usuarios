@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import {updateUser, getUserDetail} from '../../redux/actions';
 import NavBar from '../NavBar/NavBar';
+import Alert from 'react-bootstrap/Alert';
 
 function validate(input) {
     let errors = {};
@@ -19,7 +20,7 @@ function UpdateUser(props) {
     const [errors, setError] = useState({})
     const dispatch = useDispatch()
     const history = useHistory()
-
+    const [show, setShow] = useState(false)
 
     const [input, setInput] = useState({
         name: "",

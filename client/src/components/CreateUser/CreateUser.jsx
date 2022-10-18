@@ -3,6 +3,11 @@ import {useDispatch, useSelector} from 'react-redux'
 import {createUser} from '../../redux/actions';
 import NavBar from '../NavBar/NavBar';
 // import { useNavigate } from "react-router-dom"
+import Col from 'react-bootstrap/Col';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
 
 
 function validate(input) {
@@ -13,7 +18,9 @@ function validate(input) {
         errors.username = "Username is required"
     } else if(!input.website){
         errors.website = "Website is required"
-    } else if(!input.phone) {
+    } else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(input.email) == false || !input.email) {
+        errors.email = "Enter a valid email";
+    }else if(!input.phone) {
         errors.phone = "Phone is required";
     }  else if(!input.street){
         errors.street = "Street is required"
@@ -29,16 +36,18 @@ function validate(input) {
         errors.catchPhrase = "Catch phrase is required"
     } else if(!input.bs){
         errors.bs = "Bs is required"
-    } else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(input.email) == false || !input.email) {
-        errors.email = "Enter a valid email";
-    }
+    } 
     return errors;
 }
 
 const CreateRecipe = () => {
     const dispatch = useDispatch()
-    const types = useSelector(state => state.types)
     const [errors, setError] = useState({})
+    const divStyles = {boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                     marginLeft:"250px", marginRight:"250px", 
+                     background:"rgba(255,255,255,0.5)", 
+                     borderRadius:"15px"}
+    const pStyles = {color:"red"}
 
     // const navigate = useNavigate()
 
@@ -173,217 +182,244 @@ const CreateRecipe = () => {
     }
 
     return (
-        <div>
+        <div style={{backgroundColor:"rgba(166, 222, 132, 20)"}}>
             <NavBar></NavBar>
+            <br />
             <div>
                 <h2>Create user</h2>
             </div>
-            <form onSubmit={
+            <br />
+            <Form noValidate onSubmit={
                 (e) => handleSubmit(e)
-            }>
+            } >
+                <div style={divStyles}>
+            <Row className="mb-3" style={{ justifyContent:"space-evenly", marginLeft:"50px", marginRight:"50px" }}>
 
                 <div>
-                    <div>
+                    <br />
+                    <h4><strong>User</strong></h4>
+                </div>
+                <br />
+                <Form.Group as={Col} md="3">
                         <strong>
-                            <p>Name:</p>
+                            <Form.Label>Name: </Form.Label>
                         </strong>
-                        <input type="text"
+                        <Form.Control type="text"
                             value={
                                 input.name
                             }
                             name="name"
                             onChange={
                                 (e) => handleChange(e)
-                            }/> 
+                            }
+                            isValid={input.name && !errors.name}/> 
                             <div> 
                              {errors.name ?
                         <strong>
-                            <p className='error'>
+                            <p style={pStyles}>
                                 {
                                 errors.name
                             }</p>
                         </strong>: <p><br /></p> }</div>
-                    </div>
-                    <div>
+                    </Form.Group>
+                    <Form.Group as={Col} md="3">
                         <strong>
-                            <p>Username:</p>
+                            <Form.Label>Username:</Form.Label>
                         </strong>
-                        <input type="text"
+                        <Form.Control type="text"
                             value={
                                 input.username
                             }
                             name="username"
                             onChange={
                                 (e) => handleChange(e)
-                            }/> {
+                            }
+                            isValid={input.username && !errors.username}/> {
                         errors.username ? <strong>
-                            <p className='error'>
+                            <p style={pStyles}>
                                 {
                                 errors.username
                             }</p>
                         </strong>: <p><br /></p>
-                    } </div>
-                    <div className='lastRow'>
+                    } </Form.Group>
+                    <Form.Group as={Col} md="3">
                         <strong>
-                            <p>Website:</p>
+                            <Form.Label>Website:</Form.Label>
                         </strong>
-                        <input type="text"
+                        <Form.Control type="text"
                             value={
                                 input.website
                             }
                             name="website"
                             onChange={
                                 (e) => handleChange(e)
-                            }/> {
+                            }
+                            isValid={input.website && !errors.website}/> {
                         errors.website ? <strong>
-                            <p className='error'>
+                            <p style={pStyles}>
                                 {
                                 errors.website
                             }</p>
                         </strong>: <p><br /></p>
                     }
-                     </div>
-                </div>
-                <div>
-                    <div>
+                     </Form.Group>
+            </Row>
+            <Row className="mb-2" style={{ justifyContent:"space-evenly", marginLeft:"50px", marginRight:"50px" }}>
+                    <Form.Group as={Col} md="3">
                         <strong>
-                            <p>Email:</p>
+                            <Form.Label>Email:</Form.Label>
                         </strong>
-                        <input type="text"
+                        <Form.Control type="text"
                             value={
                                 input.email
                             }
                             name="email"
                             onChange={
                                 (e) => handleChange(e)
-                            }/> {
+                            }
+                            isValid={input.email && !errors.email}/> {
                         errors.email ? <strong>
-                            <p className='error'>
+                            <p style={pStyles}>
                                 {
                                 errors.email
                             }</p>
                         </strong>: <p><br /></p>
                     }
-                        </div>
-                    <div>
+                        </Form.Group>
+                    <Form.Group as={Col} md="3">
                         <strong>
-                            <p>Phone:</p>
+                            <Form.Label>Phone:</Form.Label>
                         </strong>
-                        <input type="text"
+                        <Form.Control type="text"
                             value={
                                 input.phone
                             }
                             name="phone"
                             onChange={
                                 (e) => handleChange(e)
-                            }/>
+                            }
+                            isValid={input.phone && !errors.phone}/>
                         {
                         errors.phone ? <strong>
-                            <p className='error'>
+                            <p style={pStyles}>
                                 {
                                 errors.phone
                             }</p>
                         </strong>: <p><br /></p>
                     }
-                    </div>
-                    <div>
+                    </Form.Group>
+                </Row>
+                </div> 
+                <div style={divStyles}>
+                    <br />
                         <div>
                             <h4><strong>Address</strong></h4>
                         </div>
-                        <div>
+                        <br />
+                <Row className="mb-2" style={{ justifyContent:"space-evenly", marginLeft:"50px", marginRight:"50px" }}>
+                        <Form.Group as={Col} md="3">
                             <strong>
-                                <p>Street:</p>
+                                <Form.Label>Street:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.street
                                 }
                                 name="street"
                                 onChange={
                                     (e) => handleChange(e)
-                                }/>
+                                }
+                                isValid={input.streer && !errors.streer}/>
                             {
                             errors.street ? <strong>
-                                <p className='error'>
+                                <p style={pStyles}>
                                     {
                                     errors.street
                                 }</p>
                             </strong>: <p><br /></p>
                         }
-                        </div>
-                        <div>
+                        </Form.Group>
+                        <Form.Group as={Col} md="3">
                             <strong>
-                                <p>Suite:</p>
+                                <Form.Label>Suite:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.suite
                                 }
                                 name="suite"
                                 onChange={
                                     (e) => handleChange(e)
-                                }/>
+                                }
+                                isValid={input.suite && !errors.suite}/>
                             {
                             errors.suite ? <strong>
-                                <p className='error'>
+                                <p style={pStyles}>
                                     {
                                     errors.suite
                                 }</p>
                             </strong>: <p><br /></p>
                         }
-                        </div>
-                        <div>
+                        </Form.Group>
+                        </Row>
+                        <Row className="mb-2" style={{ justifyContent:"space-evenly", marginLeft:"50px", marginRight:"50px" }}>
+                        <Form.Group as={Col} md="3">
                             <strong>
-                                <p>City:</p>
+                                <Form.Label>City:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.city
                                 }
                                 name="city"
                                 onChange={
                                     (e) => handleChange(e)
-                                }/>
+                                }
+                                isValid={input.city && !errors.city}/>
                             {
                             errors.city ? <strong>
-                                <p className='error'>
+                                <p style={pStyles}>
                                     {
                                     errors.city
                                 }</p>
                             </strong>: <p><br /></p>
                         }
-                        </div>
-                        <div>
+                        </Form.Group>
+                        <Form.Group as={Col} md="3">
                             <strong>
-                                <p>Zip code:</p>
+                                <Form.Label>Zip code:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.zipcode
                                 }
                                 name="zipcode"
                                 onChange={
                                     (e) => handleChange(e)
-                                }/>
+                                }
+                                isValid={input.zipcode && !errors.zipcode}/>
                             {
                             errors.zipcode ? <strong>
-                                <p className='error'>
+                                <p style={pStyles}>
                                     {
                                     errors.zipcode
                                 }</p>
                             </strong>: <p><br /></p>
                         }
-                        </div>
+                        </Form.Group>
+                    </Row>
                     </div>
-                    <div>
-                        <div>
+                    <div style={divStyles}>
+                    <br />
+                    <Row className="mb-2" style={{ justifyContent:"space-evenly", marginLeft:"50px", marginRight:"50px" }}>
+                            
                             <h4><strong>Geo</strong></h4>
-                        </div>
-                        <div>
+                            <br />
+                            <Form.Group as={Col} md="3">
                             <strong>
-                                <p>Latitude:</p>
+                                <Form.Label>Latitude:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.lat
                                 }
@@ -392,12 +428,12 @@ const CreateRecipe = () => {
                                     (e) => handleChange(e)
                                 }/>
                             <p><br /></p>
-                        </div>
-                        <div>
+                            </Form.Group>
+                        <Form.Group as={Col} md="3">
                             <strong>
-                                <p>Longuitude:</p>
+                                <Form.Label>Longuitude:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.lng
                                 }
@@ -406,17 +442,21 @@ const CreateRecipe = () => {
                                     (e) => handleChange(e)
                                 }/>
                             <p><br /></p>
-                        </div>
+                        </Form.Group>
+                    </Row>
                     </div>
-                    <div>
+                    <div style={divStyles}>
+                        <br />
                         <div>
                             <h4><strong>Company</strong></h4>
                         </div>
-                        <div>
+                        <br />
+                    <Row className="mb-3" style={{ justifyContent:"space-evenly", marginLeft:"50px", marginRight:"50px" }}>
+                        <Form.Group as={Col} md="3">
                             <strong>
-                                <p>Name:</p>
+                                <Form.Label>Name:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.companyName
                                 }
@@ -426,18 +466,18 @@ const CreateRecipe = () => {
                                 }/>
                             {
                             errors.companyName ? <strong>
-                                <p className='error'>
+                                <p style={pStyles}>
                                     {
                                     errors.companyName
                                 }</p>
                             </strong>: <p><br /></p>
                         }
-                        </div>
-                        <div>
+                        </Form.Group>
+                        <Form.Group as={Col} md="3">
                             <strong>
-                                <p>Catch Phrase:</p>
+                                <Form.Label>Catch Phrase:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.catchPhrase
                                 }
@@ -447,18 +487,18 @@ const CreateRecipe = () => {
                                 }/>
                             {
                             errors.catchPhrase ? <strong>
-                                <p className='error'>
+                                <p style={pStyles}>
                                     {
                                     errors.catchPhrase
                                 }</p>
                             </strong>: <p><br /></p>
                             }
-                        </div>
-                        <div>
+                        </Form.Group>
+                        <Form.Group as={Col} md="3">
                             <strong>
-                                <p>Bs:</p>
+                                <Form.Label>Bs:</Form.Label>
                             </strong>
-                            <input type="text"
+                            <Form.Control type="text"
                                 value={
                                     input.bs
                                 }
@@ -468,19 +508,21 @@ const CreateRecipe = () => {
                                 }/>
                             {
                             errors.bs ? <strong>
-                                <p className='error'>
+                                <p style={pStyles}>
                                     {
                                     errors.bs
                                 }</p>
                             </strong>: <p><br /></p>
                             }
-                        </div>
+                        </Form.Group>
+                    </Row>
                     </div>
-                </div>
                 <div className='submit'>
-                    <button type="submit">Create User</button>
+                    <Button variant="warning" type="submit" style={{width:"25rem"}}><strong>Create User</strong></Button>
                 </div>
-            </form>
+                <br />
+                
+            </Form>
         </div>
     )
 }

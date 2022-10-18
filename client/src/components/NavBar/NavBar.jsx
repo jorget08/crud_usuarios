@@ -23,7 +23,7 @@ const NavBar = () => {
         setName("")
     }
   return (
-    <Navbar bg="light" variant="light">
+    <Navbar bg="light" variant="light" sticky="top">
         <Container>
         <Navbar.Brand href="/home">Users</Navbar.Brand>
           <Nav className="me-auto">

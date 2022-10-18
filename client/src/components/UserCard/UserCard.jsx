@@ -8,7 +8,7 @@ const UserCard = ({id, name, username, avatar, phone, website}) => {
     return(
         
                 <Card.Link class="card-link" href={`/users/${id}`} style={{textDecoration:"none"}}>
-                    <Card style={{ width: '18rem', alignItems:"center"}}>
+                    <Card style={{ width: '18rem', alignItems:"center",background:"rgba(255,255,255,0.5)"}}>
                     <Card.Img variant="top" src={avatar} style={{ width: '7rem' }}/>
                         
                         <Card.Body style={{color:"black"}}>
